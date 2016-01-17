@@ -1,0 +1,68 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'forge'
+
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+		maven {
+			name = "sonatype"
+			url = "https://oss.sonatype.org/content/repositories/snapshots/"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+	}
+}
+
+repositories {
+	maven { url "https://jitpack.io" }
+}
+
+archivesBaseName = "Conjure-MCIntegration"
+
+group = "ninja.genuine"
+ext.revision = 'git rev-list --count HEAD'.execute().text.trim()
+version = "1.7.10-1.0.2-${revision}"
+
+minecraft {
+	version = "1.7.10-10.13.4.1614-1.7.10"
+	runDir = "eclipse"
+}
+
+dependencies {
+	compile 'com.github.GenuineSounds:Conjure:1.0.2'
+}
+
+processResources {
+	inputs.property "version", project.version
+	inputs.property "mcversion", project.minecraft.version
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
+		expand 'version':project.version, 'mcversion':project.minecraft.version
+	}
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
+	}
+}
+
+task deobfJar(type: Jar, dependsOn: 'classes') {
+	from sourceSets.main.output
+	classifier = 'dev'
+}
+
+task sourceJar(type: Jar, dependsOn: 'sourceMainJava') {
+	from sourceSets.main.allSource
+	classifier = 'src'
+}
+
+task javadocJar(type: Jar, dependsOn: 'javadoc') {
+	from javadoc.destinationDir
+	classifier = 'javadoc'
+}
+
+tasks.build.dependsOn deobfJar, sourceJar
