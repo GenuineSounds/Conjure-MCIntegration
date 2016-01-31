@@ -2,20 +2,40 @@ package ninja.genuine.conjure.mc;
 
 import java.util.Map.Entry;
 
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import ninja.genuine.conjure.data.*;
-import ninja.genuine.conjure.data.collection.*;
-import ninja.genuine.conjure.data.primitive.*;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NBTTagByteArray;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagLong;
+import net.minecraft.nbt.NBTTagShort;
+import net.minecraft.nbt.NBTTagString;
+import ninja.genuine.conjure.data.Data;
+import ninja.genuine.conjure.data.DataException;
+import ninja.genuine.conjure.data.Primitive;
+import ninja.genuine.conjure.data.PrimitiveArray;
+import ninja.genuine.conjure.data.collection.DataArray;
+import ninja.genuine.conjure.data.collection.DataByteArray;
+import ninja.genuine.conjure.data.collection.DataCompound;
+import ninja.genuine.conjure.data.collection.DataIntegerArray;
+import ninja.genuine.conjure.data.primitive.DataBoolean;
+import ninja.genuine.conjure.data.primitive.DataByte;
+import ninja.genuine.conjure.data.primitive.DataDouble;
+import ninja.genuine.conjure.data.primitive.DataFloat;
+import ninja.genuine.conjure.data.primitive.DataInteger;
+import ninja.genuine.conjure.data.primitive.DataLong;
+import ninja.genuine.conjure.data.primitive.DataShort;
+import ninja.genuine.conjure.data.primitive.DataString;
 
 public class DataToMC {
 
 	public static ItemStack createItemStack(final DataCompound compound) {
 		return ItemStack.loadItemStackFromNBT(create(compound));
-	}
-
-	private static NBTTagEnd create(final DataNull nbt) {
-		return new NBTTagEnd();
 	}
 
 	public static NBTTagByte create(final DataBoolean nbt) {
@@ -99,32 +119,6 @@ public class DataToMC {
 	}
 
 	public static NBTBase create(final Data<?> data) throws Exception {
-		if (data instanceof DataNull)
-			return create((DataNull) data);
-		if (data instanceof DataBoolean)
-			return create((DataBoolean) data);
-		if (data instanceof DataByte)
-			return create((DataByte) data);
-		if (data instanceof DataShort)
-			return create((DataShort) data);
-		if (data instanceof DataInteger)
-			return create((DataInteger) data);
-		if (data instanceof DataFloat)
-			return create((DataFloat) data);
-		if (data instanceof DataDouble)
-			return create((DataDouble) data);
-		if (data instanceof DataLong)
-			return create((DataLong) data);
-		if (data instanceof DataString)
-			return create((DataString) data);
-		if (data instanceof DataByteArray)
-			return create((DataByteArray) data);
-		if (data instanceof DataIntegerArray)
-			return create((DataIntegerArray) data);
-		if (data instanceof DataList)
-			return create((DataList) data);
-		if (data instanceof DataCompound)
-			return create((DataCompound) data);
 		throw new DataException("No existing conversion was found for " + data.getClass().getSimpleName(), data);
 	}
 }

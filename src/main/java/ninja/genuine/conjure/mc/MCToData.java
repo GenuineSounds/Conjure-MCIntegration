@@ -3,6 +3,17 @@ package ninja.genuine.conjure.mc;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTBase.NBTPrimitive;
+import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NBTTagByteArray;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
+import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagLong;
+import net.minecraft.nbt.NBTTagShort;
+import net.minecraft.nbt.NBTTagString;
 import ninja.genuine.conjure.data.Data;
 import ninja.genuine.conjure.data.DataException;
 import ninja.genuine.conjure.data.collection.DataArray;
@@ -15,30 +26,13 @@ import ninja.genuine.conjure.data.primitive.DataDouble;
 import ninja.genuine.conjure.data.primitive.DataFloat;
 import ninja.genuine.conjure.data.primitive.DataInteger;
 import ninja.genuine.conjure.data.primitive.DataLong;
-import ninja.genuine.conjure.data.primitive.DataNull;
 import ninja.genuine.conjure.data.primitive.DataShort;
 import ninja.genuine.conjure.data.primitive.DataString;
-import net.minecraft.nbt.NBTTagByte;
-import net.minecraft.nbt.NBTTagByteArray;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagDouble;
-import net.minecraft.nbt.NBTTagEnd;
-import net.minecraft.nbt.NBTTagFloat;
-import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.nbt.NBTTagIntArray;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagLong;
-import net.minecraft.nbt.NBTTagShort;
-import net.minecraft.nbt.NBTTagString;
 
 public class MCToData {
 
 	public static DataCompound create(final ItemStack stack) {
 		return create(stack.writeToNBT(new NBTTagCompound()));
-	}
-
-	private static DataNull create(final NBTTagEnd nbt) {
-		return DataNull.INSTANCE;
 	}
 
 	public static DataByte create(final NBTTagByte nbt) {
@@ -119,30 +113,6 @@ public class MCToData {
 	}
 
 	public static Data<?> create(final NBTBase nbt) throws Exception {
-		if (nbt instanceof NBTTagEnd)
-			return create((NBTTagEnd) nbt);
-		if (nbt instanceof NBTTagByte)
-			return create((NBTTagByte) nbt);
-		if (nbt instanceof NBTTagShort)
-			return create((NBTTagShort) nbt);
-		if (nbt instanceof NBTTagInt)
-			return create((NBTTagInt) nbt);
-		if (nbt instanceof NBTTagFloat)
-			return create((NBTTagFloat) nbt);
-		if (nbt instanceof NBTTagDouble)
-			return create((NBTTagDouble) nbt);
-		if (nbt instanceof NBTTagLong)
-			return create((NBTTagLong) nbt);
-		if (nbt instanceof NBTTagString)
-			return create((NBTTagString) nbt);
-		if (nbt instanceof NBTTagByteArray)
-			return create((NBTTagByteArray) nbt);
-		if (nbt instanceof NBTTagIntArray)
-			return create((NBTTagIntArray) nbt);
-		if (nbt instanceof NBTTagList)
-			return create((NBTTagList) nbt);
-		if (nbt instanceof NBTTagCompound)
-			return create((NBTTagCompound) nbt);
 		throw new DataException("Could not create Data from " + nbt.getClass().getSimpleName(), null);
 	}
 }
