@@ -3,7 +3,7 @@
   "modid": "Conjure-MCIntegration",
   "name": "Conjure-MCIntegration",
   "description": "Adds the Conjure library to MC.",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "mcversion": "1.7.10",
   "url": "",
   "updateUrl": "",
